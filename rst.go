@@ -45,7 +45,7 @@ func OpenRstFile(filepath string) {
 
 func ProcessRstFile(data string) (string, string) {
 	lines := strings.SplitAfter(data, "\n")
-	var lineLength, overlineLength, titlelineLength int
+	var lineLength, overlineLength, titlelineLength, underlineLength int
 	for i, line := range lines {
 		matched, err := regexp.MatchString("^[=\\-\\`:\\.'\\~\\^_*#\\\"]{4,}", line)
 		if err != nil {
@@ -53,6 +53,7 @@ func ProcessRstFile(data string) (string, string) {
 		}
 		if matched {
 			underlineCharacter := string(line[0])
+			underlineLength = len(strings.TrimSpace(lines[i]))
 			if i == 0 {
 				overlineLength = len(strings.TrimSpace(lines[i]))
 				titlelineLength = utf8.RuneCountInString(strings.TrimSpace(lines[i+1]))
@@ -74,6 +75,8 @@ func ProcessRstFile(data string) (string, string) {
 				}
 			} else if lines[i-2][0] == lines[i][0] {
 				lineLength = len(strings.TrimSpace(lines[i-2]))
+			} else if underlineLength > utf8.RuneCountInString(strings.TrimSpace(lines[i-1])) {
+				lineLength = len(strings.TrimSpace(lines[i]))
 			}
 			line = strings.Repeat(underlineCharacter, lineLength)
 			lines[i] = line + "\r\n"
