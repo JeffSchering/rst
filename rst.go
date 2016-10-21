@@ -2,22 +2,22 @@ package main
 
 import (
 	"fmt"
-	"strings"
 	"io/ioutil"
-	"path/filepath"
 	"os"
+	"path/filepath"
 	"regexp"
+	"strings"
 	"unicode/utf8"
 )
 
-func  main()  {
-		arg := os.Args[1]
-		fmt.Printf("Starting at dir: %s\n", arg)
-		Walk(arg)
+func main() {
+	arg := os.Args[1]
+	fmt.Printf("Starting at dir: %s\n", arg)
+	Walk(arg)
 }
 
 func Walk(rootdir string) {
-		filepath.Walk(rootdir, WalkFunc)
+	filepath.Walk(rootdir, WalkFunc)
 }
 
 func WalkFunc(rootdir string, info os.FileInfo, err error) error {
@@ -85,5 +85,5 @@ func ProcessRstFile(data string) (string, string) {
 			lineLength = utf8.RuneCountInString(strings.TrimSpace(line))
 		}
 	}
-	return "ok", strings.Join(lines,"")
+	return "ok", strings.Join(lines, "")
 }
