@@ -1,5 +1,5 @@
 # rst
-Go script to adjust lengths of title underlines in reStructuredText files
+Go script to adjust lengths of title underlines in reStructuredText files.
 
 This script walks a directory tree, reads in each .rst file that it finds, 
 and adjusts the title underline lengths if needed. It writes the changes back 
